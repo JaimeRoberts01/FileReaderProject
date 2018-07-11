@@ -9,6 +9,7 @@ public class Processing {
 	private Object [][] newData;
 	private int rows;
 	private double frameAverage, trajectoryAverage; //, frameStandardDeviation, trajectoryStandardDeviation;
+	private GUIClass inputData;
 
 
 	public Processing () {	
@@ -90,13 +91,16 @@ public class Processing {
 	}
 
 
-	public ArrayList<Double> nanoMeters () { // This method should calculate nanometers
+	public ArrayList<Double> nanoMeters (double conversion) { // This method should calculate nanometers
 
+		
+		//System.out.println("THIS IS CONVERSION: " + inputData.getConversion());
 		nanometers = new ArrayList <Double>();
 
 		for (int i=0; i<rows;i++) {
 
-			double nm = deflection.get(i) * 73;
+			//double nm = deflection.get(i) * 73;
+			double nm = deflection.get(i) * conversion; // this doesn't work
 			nanometers.add(nm);
 		}
 		//System.out.println(nanometers);
@@ -104,15 +108,18 @@ public class Processing {
 	}
 
 
-	public ArrayList<Double> forces () {
+	public ArrayList<Double> forces (double youngsModulous, double pillarD, double pillarL) {
 
 		picoNewtons = new ArrayList <Double>();
 
 		double constant = (double) 3/64;
-		double E = 2.0;
+		//double E = 2.0;
+		double E = youngsModulous;
 		double pi = Math.PI;
-		double diameter = 0.5;
-		double length = 1.3;
+		//double diameter = 0.5;
+		double diameter = pillarD;
+		//double length = 1.3;
+		double length = pillarL;
 
 		for (int i=0; i<rows; i++) {
 
